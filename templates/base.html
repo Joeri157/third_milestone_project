@@ -22,8 +22,8 @@
                 <li><a href="">Categories</a></li>
                 <li><a href="">Log Out</a></li>
             
-                <li><a href="">Log In</a></li>
-                <li><a href="">Register</a></li>
+                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
             
 		</ul>
 		<nav>
@@ -39,6 +39,19 @@
 			</div>
 		</nav>
 	</header>
+
+    <!-------------------- Flash Messages -------------------->
+    <section>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for messages in messages %}
+                    <div class="row flashes">
+                        <h4 class="#ffa726 orange lighten-1 center-align" style="color:white;">{{ messages }}</h4>
+                    </div>  
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
 
     <main>
     {% block content %}
