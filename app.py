@@ -111,10 +111,22 @@ def profile(username):
         {"username": session["user"]})["username"]
 
     if session["user"]:
-        uploads = list(mongo.db.uploads.find())
+        uploads = list(
+            mongo.db.uploads.find().sort("upload_time", -1))
         return render_template(
             "profile.html", username=username, uploads=uploads)
 
+    return redirect(url_for("login"))
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Log out                                                                    #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/logout")
+def logout():
+    # remove user from session cookies
+    flash("You have been logged out")
+    session.pop("user")
     return redirect(url_for("login"))
 
 
