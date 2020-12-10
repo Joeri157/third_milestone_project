@@ -1,6 +1,14 @@
 $(document).ready(function(){
-    // Materialize
+// Materialize Jquery
+
+    // Menu Dropdown trigger
     $(".dropdown-trigger").dropdown({
         coverTrigger: false
         });
+
+    //Profile Tabs
+    $('.tabs').tabs({
+        swipeable: true
+    });
+    
 });

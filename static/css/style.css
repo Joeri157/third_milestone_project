@@ -67,3 +67,11 @@ nav ul a.nav-upload-btn {
 .card-panel .register-login-button {
     font-weight: bold;
 }
+
+/***********************/
+/* Profile             */
+/***********************/
+.row .profile-title {
+    font-weight: bold;
+    letter-spacing: 2px;
+}
