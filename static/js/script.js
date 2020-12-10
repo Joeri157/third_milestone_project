@@ -7,8 +7,6 @@ $(document).ready(function(){
         });
 
     //Profile Tabs
-    $('.tabs').tabs({
-        swipeable: true
-    });
+    $('.tabs').tabs();
     
 });
