@@ -18,7 +18,7 @@
 		<ul id="dropdown1" class="dropdown-content custom-dropdown #ffa726 orange lighten-1">
 			<li><a href="">Home</a></li>
             
-                <li><a href="">Profile</a></li>
+                <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                 <li><a href="">Categories</a></li>
                 <li><a href="">Log Out</a></li>
             
@@ -29,7 +29,7 @@
 		<nav>
 			<div class="nav-wrapper #ffa726 orange lighten-1">                
 				<a href="" class="custom-logo left brand-logo">M3M3KRU</a>
-				<ul class="right show-on-large" >
+				<ul class="right show-on-large">
                     <!-- Button to Upload the Content -->
                     <li><a href="" class="nav-upload-btn btn #536dfe indigo accent-2">Upload</a></li>
                 
