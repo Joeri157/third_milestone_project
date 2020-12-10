@@ -49,3 +49,21 @@ nav ul a.nav-upload-btn {
     padding: 0 5px;
     font-weight: bold;
 }
+
+/********************/
+/* Register         */
+/********************/
+.card-panel .register-title {
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.card-panel .register-text {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
+.card-panel .register-button {
+    font-weight: bold;
+}
