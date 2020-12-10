@@ -3,11 +3,14 @@
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 
 import os
+import io
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from datetime import datetime
+from filestack import Client as FileStackClient, Security
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
@@ -21,8 +24,12 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
+filestack_client = FileStackClient(os.environ.get("FILE_STACK_PUBLIC_API_KEY"))
+filestack_secret = os.environ.get("FILE_STACK_SECRET_API_KEY")
 
 mongo = PyMongo(app)
+
+policy = {"expiry": 253381964415}
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
@@ -118,6 +125,7 @@ def profile(username):
 
     return redirect(url_for("login"))
 
+
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 #  Log out                                                                    #
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
@@ -128,6 +136,34 @@ def logout():
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("login"))
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Add Upload                                                                 #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/add_upload", methods=["GET", "POST"])
+def add_upload():
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    if request.method == "POST":
+        file_object = request.files["upload_image"].read()
+        security = Security(policy, filestack_secret)
+        uploaded_file = filestack_client.upload(
+            file_obj=io.BytesIO(file_object), security=security)
+        upload = {
+            "category_name": request.form.get("catergory_name"),
+            "upload_title": request.form.get("upload_title"),
+            "upload_description": request.form.get("upload_description"),
+            "upload_image": uploaded_file.url,
+            "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+            "uploaded_by": session["user"]
+            }
+        mongo.db.uploads.insert_one(upload)
+        flash("Congratulations {}, upload was succesfull!".format(
+                session["user"]))
+        return redirect(url_for("index"))
+
+    return render_template("add_upload.html", categories=categories)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
