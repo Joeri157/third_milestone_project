@@ -50,20 +50,20 @@ nav ul a.nav-upload-btn {
     font-weight: bold;
 }
 
-/********************/
-/* Register         */
-/********************/
-.card-panel .register-title {
+/***********************/
+/* Register and Login  */
+/***********************/
+.card-panel .register-login-title{
     font-weight: bold;
     letter-spacing: 4px;
 }
 
-.card-panel .register-text {
+.card-panel .register-login-text {
     font-weight: bold;
     font-size: 1.5rem;
     padding: 10px;
 }
 
-.card-panel .register-button {
+.card-panel .register-login-button {
     font-weight: bold;
 }

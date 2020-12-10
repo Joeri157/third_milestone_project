@@ -1,3 +1,44 @@
 {% extends "base.html" %}
-{% block content %}
+{% block content %} 
+
+    <div class="container">
+        <div class="row">
+            <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('login') }}">
+                <div class="card-panel">
+                <h3 class="register-login-title center-align">LOGIN</h3>
+    <!--------------------  Username -------------------->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="fas fa-user-cog prefix"></i>
+                            <input id="username" name="username" type="text" minlength="5"
+                                    maxlength="15" pattern="[a-zA-Z0-9]{5,15}" class="validate" required>
+                            <label for="username">Username</label>
+                        </div>
+                    </div>
+    <!--------------------  Password -------------------->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="fas fa-lock prefix"></i>
+                            <input id="password" name="password" type="password" minlength="5"
+                                    maxlength="15" pattern="[a-zA-Z0-9]{5,15}" class="validate" required>
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+    <!-------------------- Log in Button -------------------->
+                    <div class="row center-align">
+                        <button class="register-login-button btn-large #ffa726 orange lighten-1" type="submit">
+                            Log In<i class="fas fa-paper-plane right"></i>
+                        </button>
+                    </div>                    
+    <!-------------------- Link to Log In -------------------->
+                    <div class="col s12">
+                        <p class="register-login-text center-align ">
+                            Not Registered Yet? <a href="{{ url_for('register') }}">Sign Up</a>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>         
+
 {% endblock %}
