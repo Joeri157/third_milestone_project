@@ -108,6 +108,14 @@ nav {
 
     .custom-btn {
         padding: 10px;
+
+        .btn-delete-edit {
+            margin: 0 2px 0 2px;
+
+            a {
+                color: white;
+            }
+        }
     }
 
 }

@@ -96,6 +96,12 @@ nav ul a.nav-upload-btn {
 .card .custom-btn {
   padding: 10px;
 }
+.card .custom-btn .btn-delete-edit {
+  margin: 0 2px 0 2px;
+}
+.card .custom-btn .btn-delete-edit a {
+  color: white;
+}
 
 /* Side Nav Category */
 div ul li .side-cat-header {
