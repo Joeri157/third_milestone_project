@@ -31,10 +31,14 @@
                                 <div class="btn-small">likes</div>
                                     <a href="#" class="btn-small red accent-4"><i class="fas fa-thumbs-down"></i></a>
                                 <div class="btn-small">dislikes</div>                                                
-                            {% if session.user|lower == upload.uploaded_by|lower %}
-                                <div class="right btn-small btn-delete-edit red accent-4"><a href=""><i class="far fa-trash-alt"></i></a></div>
-                                <div class="right btn-small btn-delete-edit #536dfe indigo accent-2"><a href=""><i class="far fa-edit"></i></a></div>
-                            {% endif %}
+                                {% if session.user|lower == upload.uploaded_by|lower %}
+                                    <div class="right btn-small btn-delete-edit red accent-4">
+                                        <a href=""><i class="far fa-trash-alt"></i></a>
+                                    </div>
+                                    <div class="right btn-small btn-delete-edit #536dfe indigo accent-2">
+                                        <a href="{{ url_for('edit_upload', id=upload._id) }}"><i class="far fa-edit"></i></a>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>                     

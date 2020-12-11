@@ -10,6 +10,11 @@ body {
 main {
   flex: 1 0 auto;
 }
+main h3 {
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+}
 
 /* footer icon */
 footer .fab {
@@ -142,5 +147,13 @@ div ul li a .custom-category-name {
 /***********************/
 /* Add Upload          */
 /***********************/
+/***********************/
+/* EditUpload          */
+/***********************/
+.card-panel img {
+  max-width: 300px;
+  max-height: 400px;
+  padding: 10px;
+}
 
 /*# sourceMappingURL=style.css.map */

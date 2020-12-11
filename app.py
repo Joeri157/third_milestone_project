@@ -169,6 +169,38 @@ def add_upload():
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Edit Upload                                                                #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/edit_upload/<id>", methods=["GET", "POST"])
+def edit_upload(id):
+    upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    if request.method == "POST":
+        file_object = request.files["file"].read()
+        security = Security(upload_only_policy, filestack_secret)
+        overwrite_file = filestack_client.upload(
+            file_obj=io.BytesIO(file_object), security=security)
+        mongo.db.uploads.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {
+                "category_name": request.form.get("catergory_name"),
+                "upload_title": request.form.get("upload_title"),
+                "upload_description": request.form.get("upload_description"),
+                "upload_image": overwrite_file.url,
+                "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+                "uploaded_by": session["user"]
+            }}
+        )
+        flash(
+            "Well done {},upload succesfully updated!".format(session["user"]))
+        return redirect(url_for("index"))
+
+    return render_template(
+        "edit_upload.html", upload=upload, categories=categories)
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 #  Upload on a single page                                                    #
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 

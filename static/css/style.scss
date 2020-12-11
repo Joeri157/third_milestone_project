@@ -1,3 +1,6 @@
+// Variables
+$font-weight-style: bold;
+
 /********************/
 /* Footer           */
 /********************/
@@ -9,6 +12,12 @@ body {
 
 main {
     flex: 1 0 auto;
+
+    h3 {
+        font-weight: $font-weight-style;
+        letter-spacing: 2px;
+        color: white;
+    }
 }
 
 /* footer icon */
@@ -38,7 +47,7 @@ ul {
     }
 
     .custom-dropdown li>a {
-    font-weight: bold;
+    font-weight: $font-weight-style;
     font-size: 2rem;
     color: white;
     padding: 15px 10px;
@@ -48,12 +57,12 @@ ul {
 nav {
     a.custom-logo {
     padding: 0 0 0 10px;
-    font-weight: bold;
+    font-weight: $font-weight-style;
     }
 
     ul a.nav-upload-btn {
     padding: 0 5px;
-    font-weight: bold;
+    font-weight: $font-weight-style;
     }
 }
 
@@ -64,7 +73,7 @@ nav {
 /* Category name and upload-time on content card */
 .card .row  {
     .custom-upload-category{
-    font-weight: bold;
+    font-weight: $font-weight-style;
     font-size: 1.25rem;
     width: auto;
     padding: 0 0 0 0.75rem;
@@ -85,7 +94,7 @@ nav {
 
     .custom-upload-content {
     font-size: 1.25rem;
-    font-weight: bold;
+    font-weight: $font-weight-style;
     color: black;
     padding: 0 1rem 0 1rem;
     }
@@ -98,7 +107,7 @@ nav {
 
     .custom-upload-title {
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: $font-weight-style;
     color: black;
     }
 
@@ -123,12 +132,12 @@ nav {
 /* Side Nav Category */
 div ul li {
     .side-cat-header {
-        font-weight: bold;
+        font-weight: $font-weight-style;
         letter-spacing: 2px;
     }
 
     a .custom-category-name {
-        font-weight: bold;
+        font-weight: $font-weight-style;
         color: white;
         letter-spacing: 2px;
         font-size: 20px;
@@ -140,18 +149,18 @@ div ul li {
 /***********************/
 .card-panel {
     .register-login-title{
-    font-weight: bold;
+    font-weight: $font-weight-style;
     letter-spacing: 4px;
     }
 
     .register-login-text {
-    font-weight: bold;
+    font-weight: $font-weight-style;
     font-size: 1.5rem;
     padding: 10px;
     }
 
     .register-login-button {
-    font-weight: bold;
+    font-weight: $font-weight-style;
     }
 }
 
@@ -160,7 +169,7 @@ div ul li {
 /***********************/
 .row {
     .profile-title {
-    font-weight: bold;
+    font-weight: $font-weight-style;
     letter-spacing: 2px;
     }
 }
@@ -168,3 +177,15 @@ div ul li {
 /***********************/
 /* Add Upload          */
 /***********************/
+
+
+/***********************/
+/* EditUpload          */
+/***********************/
+.card-panel {
+    img {
+        max-width: 300px;
+        max-height: 400px;
+        padding: 10px;
+    }
+}
