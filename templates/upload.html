@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-------------------- Uploaded content -------------------->
+    <div class="container">   
+        <div class="row">
+            <div class="col s12">
+                <div class="card #f5f5f5 grey lighten-4">
+                    <div class="row">
+                        <div class="custom-upload-category col s6 ">
+                            {{ upload.category_name }}
+                        </div>
+                        <div class="col s6 custom-upload-time">
+                            {{ upload.upload_time }}
+                        </div>
+                    </div>
+                    <div class="custom-upload-title" style="margin: 0;">                                
+                            {{ upload.upload_title }}                                
+                    </div>
+                    <div class="card-image">
+                        <img src="{{ upload.upload_image }}">
+                    </div>
+                    <div class="card-content custom-upload-content">
+                        <p>{{ upload.upload_description}}</p>
+                        <p class="custom-upload-by">by: {{ upload.uploaded_by }}</p>
+                    </div>
+                </div>          
+            </div>
+        </div>        
+    </div>
+
+{% endblock %}
