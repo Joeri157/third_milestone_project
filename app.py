@@ -39,9 +39,11 @@ policy = {"expiry": 253381964415}
 @app.route("/")
 @app.route("/index")
 def index():
+    categories = list(mongo.db.categories.find().sort("category_name", 1))
     uploads = list(
         mongo.db.uploads.find().sort("upload_time", -1))
-    return render_template("base.html", uploads=uploads)
+    return render_template(
+        "index.html", uploads=uploads, categories=categories)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #

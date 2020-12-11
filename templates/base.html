@@ -28,7 +28,7 @@
 		</ul>
 		<nav>
 			<div class="nav-wrapper #ffa726 orange lighten-1">                
-				<a href="" class="custom-logo left brand-logo">M3M3KRU</a>
+				<a href="{{ url_for('index') }}" class="custom-logo left brand-logo">M3M3KRU</a>
 				<ul class="right show-on-large">
                     <!-- Button to Upload the Content -->
                     <li><a href="{{ url_for('add_upload') }}" class="nav-upload-btn btn #536dfe indigo accent-2">Upload</a></li>
@@ -55,13 +55,6 @@
 
     <main>
     {% block content %}
-        {% for upload in uploads %}
-            {{ upload.category_name }}
-            {{ upload.upload_time }}
-            {{ upload.upload_title }}
-            {{ upload.upload_description}}
-            {{ upload.uploaded_by }}
-        {% endfor %}
     {% endblock %}
     </main>
 

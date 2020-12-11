@@ -2,80 +2,139 @@
 /* Footer           */
 /********************/
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 main {
-    flex: 1 0 auto;
+  flex: 1 0 auto;
 }
 
 /* footer icon */
-.fab {
-    font-size: 2rem;
+footer .fab {
+  font-size: 2rem;
 }
 
 /********************/
 /* Navbar           */
 /********************/
-ul .custom-dropdown { /* Code used to adjust the Navigation Menu, See README file  */
-    margin: 0;
-    min-width: 200px; /* Changed this to accomodate content width */
-    margin-left: -1px; /* Add this to keep dropdown in line with edge of navbar */
-    overflow: hidden; /* Changed this from overflow-y:auto; to overflow:hidden; */
-    position: absolute;
-    white-space: nowrap;
-    z-index: 1;
-    will-change: width, height;
+ul .custom-dropdown {
+  /* Code used to adjust the Navigation Menu, See README file  */
+  margin: 0;
+  min-width: 200px;
+  /* Changed this to accomodate content width */
+  margin-left: -1px;
+  /* Add this to keep dropdown in line with edge of navbar */
+  overflow: hidden;
+  /* Changed this from overflow-y:auto; to overflow:hidden; */
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+  will-change: width, height;
 }
-
-.custom-dropdown li {
-    min-height: 0;
+ul .custom-dropdown li {
+  min-height: 0;
 }
-
-.custom-dropdown li>a {
-    font-weight: bold;
-    font-size: 2rem;
-    color: white;
-    padding: 15px 10px;
+ul .custom-dropdown li > a {
+  font-weight: bold;
+  font-size: 2rem;
+  color: white;
+  padding: 15px 10px;
 }
 
 nav a.custom-logo {
-    padding: 0 0 0 10px;
+  padding: 0 0 0 10px;
+  font-weight: bold;
+}
+nav ul a.nav-upload-btn {
+  padding: 0 5px;
+  font-weight: bold;
 }
 
-nav ul a.nav-upload-btn {
-    padding: 0 5px;
-    font-weight: bold;
+/***********************/
+/* Homepage            */
+/***********************/
+/* Category name and upload-time on content card */
+.card .row .custom-upload-category {
+  font-weight: bold;
+  font-size: 1.25rem;
+  width: auto;
+  padding: 0 0 0 0.75rem;
+}
+.card .row .custom-upload-time {
+  color: #00000075;
+  font-size: 0.75rem;
+  width: auto;
+  padding: 0.6rem 0 0 0.25rem;
+}
+
+/* Uploaded content card */
+.card {
+  padding: 10px;
+  margin-bottom: 24px;
+}
+.card .custom-upload-content {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: black;
+  padding: 0 1rem 0 1rem;
+}
+.card .custom-upload-by {
+  color: #00000075;
+  font-size: 1rem;
+  padding: 0;
+}
+.card .custom-upload-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: black;
+}
+.card .row {
+  margin-bottom: 0;
+}
+.card .custom-btn {
+  padding: 10px;
+}
+
+/* Side Nav Category */
+div ul li .side-cat-header {
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+div ul li a .custom-category-name {
+  font-weight: bold;
+  color: white;
+  letter-spacing: 2px;
+  font-size: 20px;
 }
 
 /***********************/
 /* Register and Login  */
 /***********************/
-.card-panel .register-login-title{
-    font-weight: bold;
-    letter-spacing: 4px;
+.card-panel .register-login-title {
+  font-weight: bold;
+  letter-spacing: 4px;
 }
-
 .card-panel .register-login-text {
-    font-weight: bold;
-    font-size: 1.5rem;
-    padding: 10px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 10px;
 }
-
 .card-panel .register-login-button {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /***********************/
 /* Profile             */
 /***********************/
 .row .profile-title {
-    font-weight: bold;
-    letter-spacing: 2px;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 
 /***********************/
 /* Add Upload          */
 /***********************/
+
+/*# sourceMappingURL=style.css.map */
