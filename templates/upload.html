@@ -24,6 +24,7 @@
                         <p>{{ upload.upload_description}}</p>
                         <p class="custom-upload-by">by: {{ upload.uploaded_by }}</p>
                     </div>
+<!-------------------- Buttons like/dislike/edit/delete -------------------->
                     <div class="row">
                         <div class="col s12">
                             <div class="custom-btn">
@@ -44,7 +45,27 @@
                     </div>                     
                 </div>           
             </div>
-        </div>        
+        </div>
+<!--------------------  Add Comment -------------------->
+        {% if session.user %}
+            <div class="row">                
+                <form method="POST" action="{{ url_for('add_comment', id=upload._id) }}">
+<!--------------------  Comment Description -------------------->
+                    <div class="col s12">
+                        <div class="card-panel">
+                            <div class="input-field col s12">
+                                <textarea id="comment_description" name="comment_description"
+                                    maxlength="300" class="materialize-textarea" data-length="300"></textarea>
+                                <label for="comment_description">Comment description</label>
+                            </div>                
+                            <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
+                                Add comment<i class="fas fa-comment right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}           
     </div>
 
 {% endblock %}

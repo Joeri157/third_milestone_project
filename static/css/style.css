@@ -1,4 +1,11 @@
 /********************/
+/* Global Styles    */
+/********************/
+.btn-small {
+  border-radius: 15px;
+}
+
+/********************/
 /* Footer           */
 /********************/
 body {
@@ -78,6 +85,7 @@ nav ul a.nav-upload-btn {
 .card {
   padding: 10px;
   margin-bottom: 24px;
+  border-radius: 15px;
 }
 .card .custom-upload-content {
   font-size: 1.25rem;
@@ -148,12 +156,19 @@ div ul li a .custom-category-name {
 /* Add Upload          */
 /***********************/
 /***********************/
-/* EditUpload          */
+/* Edit Upload         */
 /***********************/
+.card-panel {
+  border-radius: 15px;
+}
 .card-panel img {
   max-width: 300px;
   max-height: 400px;
   padding: 10px;
 }
+
+/***********************/
+/* Add Comment         */
+/***********************/
 
 /*# sourceMappingURL=style.css.map */

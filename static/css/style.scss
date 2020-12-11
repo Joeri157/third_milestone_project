@@ -1,5 +1,13 @@
 // Variables
 $font-weight-style: bold;
+$border-radius-style: 15px;
+
+/********************/
+/* Global Styles    */
+/********************/
+.btn-small {
+    border-radius: $border-radius-style;
+}
 
 /********************/
 /* Footer           */
@@ -91,6 +99,7 @@ nav {
 .card {
     padding: 10px;
     margin-bottom: 24px;
+    border-radius: $border-radius-style;
 
     .custom-upload-content {
     font-size: 1.25rem;
@@ -180,12 +189,18 @@ div ul li {
 
 
 /***********************/
-/* EditUpload          */
+/* Edit Upload         */
 /***********************/
 .card-panel {
+    border-radius: $border-radius-style;
+
     img {
         max-width: 300px;
         max-height: 400px;
         padding: 10px;
     }
 }
+
+/***********************/
+/* Add Comment         */
+/***********************/

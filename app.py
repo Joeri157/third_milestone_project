@@ -212,6 +212,31 @@ def delete_upload(id):
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Add a comment                                                              #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/add_comment/<id>", methods=["GET", "POST"])
+def add_comment(id):
+    upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
+    new_comment = {
+        "_id": ObjectId(),
+        "comment_by": session["user"],
+        "comment_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+        "comment_description": request.form.get("comment_description")
+    }
+
+    if request.method == "POST":
+        mongo.db.uploads.update_one(
+            {"_id": ObjectId(id)},
+            {"$push": {"comments": new_comment}})
+        flash(
+            "Comment succesfully added, {}".format(session["user"]))
+        return redirect(request.referrer)
+
+    return render_template(request.referrer, upload=upload)
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 #  Upload on a single page                                                    #
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 
