@@ -202,5 +202,40 @@ div ul li {
 }
 
 /***********************/
-/* Add Comment         */
+/* Comments            */
 /***********************/
+/* customized for category name */
+.card {
+    .row {    
+        .custom-commented-by {
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0 1rem 0 1rem;
+        }
+
+        div .dropdown-comment, .comment-icon {
+        font-weight: bold;
+        font-size: 1rem;
+        margin: 0;
+        color: lightgrey;
+
+            ul li>a {
+                color: #ffa726;
+                font-weight: $font-weight-style;
+            }
+        }
+        
+    }
+    .card-content {
+        padding: 0px 10px 20px 10px;
+        word-break: break-all;
+
+        .custom-comment-time {
+            margin: 0;
+            width: auto;
+            padding: 0px 0px 0px 0px;
+            color: #00000075;
+            font-size: 0.75rem;
+        }
+    }
+}

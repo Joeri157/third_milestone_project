@@ -65,7 +65,36 @@
                     </div>
                 </form>
             </div>
-        {% endif %}           
+        {% endif %}
+        <!-------------------- Comment section -------------------->
+        <div class="row">
+            <div class="col s12">
+                {% for comment in upload.comments %}
+                    <div class="card">
+                        <div class="row" style="margin-bottom: 0;">
+                            <div class="custom-commented-by col s12">
+                                Commented by: {{ comment.comment_by }}
+                                {% if session.user|lower == comment.comment_by|lower %}
+                                    <ul class="right dropdown-comment">
+                                        <li>
+                                            <a class="dropdown-trigger1 comment-icon" href="#!" data-target="dropdown2"><i class="fas fa-ellipsis-v"></i></a>
+                                        </li>
+                                    </ul>
+                                    <ul id="dropdown2" class="dropdown-content">
+                                        <li><a href="" class="">Delete</a></li>
+                                        <li><a class="modal-trigger" href="#edit-comment">Edit</a></li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <p>{{ comment.comment_description }}</p>
+                            <div class="col s6 custom-comment-time">
+                                {{ comment.comment_time }}
+                            </div>
+                        </div>                                          
+                    </div>
+                    {% endfor %}          
     </div>
 
 {% endblock %}

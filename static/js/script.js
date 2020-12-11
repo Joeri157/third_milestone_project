@@ -9,6 +9,9 @@ $(document).ready(function(){
     //Profile Tabs
     $('.tabs').tabs();
 
+    // Counts characters in text area of upload and comment
+    $('input#input_text, textarea#upload_description, textarea#comment_description').characterCounter();
+
     // Add Upload select
     $('select').formSelect();
     // Select Validate function from the Code Institute - tutorial
@@ -39,5 +42,11 @@ $(document).ready(function(){
             }
         });
     }
+
+    // Dropdown for the Comment (edit and delete function)
+    $(".dropdown-trigger1").dropdown({
+        coverTrigger: false,
+        alignment: "right"
+        });
 
 });
