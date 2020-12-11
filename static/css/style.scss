@@ -204,7 +204,7 @@ div ul li {
 /***********************/
 /* Comments            */
 /***********************/
-/* customized for category name */
+/* Comment content */
 .card {
     .row {    
         .custom-commented-by {
@@ -238,4 +238,15 @@ div ul li {
             font-size: 0.75rem;
         }
     }
+}
+/* Edit comment styling */
+.modal {
+    .modal-content {
+        padding: 20px;
+
+        .row {
+            margin-bottom: 0;
+        }
+    }
+    border-radius: $border-radius-style;
 }

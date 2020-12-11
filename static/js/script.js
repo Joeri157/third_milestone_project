@@ -48,5 +48,7 @@ $(document).ready(function(){
         coverTrigger: false,
         alignment: "right"
         });
+    // Modal to edit a comment
+    $('.modal').modal();
 
 });

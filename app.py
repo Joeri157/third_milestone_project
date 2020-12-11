@@ -237,6 +237,26 @@ def add_comment(id):
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Edit Comment                                                               #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/edit_comment/<id>", methods=["GET", "POST"])
+def edit_comment(id):
+    if request.method == "POST":
+        mongo.db.uploads.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {"comments": [{
+                "_id": ObjectId(id),
+                "comment_by": session["user"],
+                "comment_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+                "comment_description": request.form.get(
+                    "comment_description")}]}})
+        flash("Comment succesfully changed")
+        return redirect(request.referrer)
+    return redirect(request.referrer)
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 #  Upload on a single page                                                    #
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 
