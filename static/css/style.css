@@ -22,6 +22,11 @@ main h3 {
   letter-spacing: 2px;
   color: white;
 }
+main h5 {
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+}
 
 /* footer icon */
 footer .fab {
@@ -198,15 +203,18 @@ div ul li a .custom-category-name {
   font-size: 0.75rem;
 }
 
-/* Edit comment styling */
-.modal {
+/***********************/
+/* Category            */
+/***********************/
+.card-category {
+  padding: 10px;
+  margin: 10px;
   border-radius: 15px;
 }
-.modal .modal-content {
-  padding: 20px;
-}
-.modal .modal-content .row {
-  margin-bottom: 0;
+.card-category .card-content-category a {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 /*# sourceMappingURL=style.css.map */

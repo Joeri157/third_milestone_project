@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <h5 class="#ffa726 orange lighten-1 center-align">Choose Category</h5>
+        <div class="row">
+            {% for category in categories %}
+                <div class="col s12 m6 l4">
+                    <div class="card-category #ffa726 orange lighten-1 center-align">
+                        <div class="card-content-category white-text">
+                            <a href="">
+                                <span class="custom-category-name">{{ category.category_name }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -26,6 +26,11 @@ main {
         letter-spacing: 2px;
         color: white;
     }
+    h5 {
+        font-weight: $font-weight-style;
+        letter-spacing: 2px;
+        color: white;
+    }
 }
 
 /* footer icon */
@@ -239,14 +244,21 @@ div ul li {
         }
     }
 }
-/* Edit comment styling */
-.modal {
-    .modal-content {
-        padding: 20px;
 
-        .row {
-            margin-bottom: 0;
+/***********************/
+/* Category            */
+/***********************/
+.card-category {
+    padding: 10px;
+    margin: 10px;
+    border-radius: $border-radius-style;
+
+    .card-content-category {
+        a {
+            color: white;
+            font-weight: $font-weight-style;
+            font-size: 18px;
+
         }
     }
-    border-radius: $border-radius-style;
 }
