@@ -82,7 +82,7 @@
                                     </ul>
                                     <ul id="dropdown2" class="dropdown-content">
                                         <li><a href="" class="">Delete</a></li>
-                                        <li><a class="modal-trigger" href="#edit-comment">Edit</a></li>
+                                        <li><a href="">Edit</a></li>
                                     </ul>
                                 {% endif %}
                             </div>
@@ -93,32 +93,6 @@
                                 {{ comment.comment_time }}
                             </div>
                         </div>                                          
-                    </div>
-    <!-------------------- Modal Edit Comment -------------------->
-                    <div id="edit-comment" class="modal">
-                        <form method="POST" action="{{ url_for('edit_comment', id=upload._id) }}">
-                            <div class="modal-content">                            
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <textarea id="comment_description" name="comment_description"
-                                            maxlength="300" class="materialize-textarea" data-length="300">
-                                            {{- comment.comment_description -}}
-                                        </textarea>
-                                        <label for="comment_description">Comment description</label>
-                                    </div> 
-                                </div>                            
-                            </div>
-                            <div class="modal-footer">
-                        <!--------------------  Cancel-Button -------------------->
-                                <a href="" class="btn-small red">
-                                    Cancel!<i class="fas fa-times-circle right"></i>
-                                </a>
-                         <!--------------------  Edit-Button -------------------->        
-                                <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
-                                    Edit<i class="fas fa-comment right"></i>
-                                </button>
-                            </div>
-                        </form>
                     </div>                       
                 {% endfor %}              
             </div>
