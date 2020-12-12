@@ -8,7 +8,7 @@
                 <div class="col s12 m6 l4">
                     <div class="card-category #ffa726 orange lighten-1 center-align">
                         <div class="card-content-category white-text">
-                            <a href="">
+                            <a href="{{ url_for('category_page', category_name=category.category_name) }}">
                                 <span class="custom-category-name">{{ category.category_name }}</span>
                             </a>
                         </div>
