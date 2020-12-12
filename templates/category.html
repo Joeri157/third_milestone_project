@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-------------------- Uploaded content -------------------->
+    <div class="container">   
+        <div class="row">
+            <div class="col s12">
+                {% for upload in uploads %}
+                        <div class="card upload-content #f5f5f5 grey lighten-4">
+                            <div class="row">
+                                <!-------------------- Category Name -------------------->
+                                <div class="col s6 custom-upload-category">
+                                    {{ upload.category_name -}}
+                                </div>
+                                <div class="col s6 custom-upload-time">
+                                    {{ upload.upload_time }}
+                                </div>
+                            </div>
+                            <!-------------------- on click to go to post link -------------------->
+                            <a href="{{ url_for('upload_page', id=upload._id) }}" target="_blank">
+                                <div class="custom-upload-title">                                
+                                    {{ upload.upload_title }}                                
+                                </div>
+                                <div class="card-image">
+                                    <img src="{{ upload.upload_image }}">
+                                </div>
+                                <div class="card-content custom-upload-content">
+                                    <p>{{ upload.upload_description}}</p>
+                                    <!-------------------- Only shows when the session user and uploaded by matches -------------------->  
+                                    {% if session.user|lower == upload.uploaded_by|lower %}
+                                        <p class="custom-upload-by">by: {{ upload.uploaded_by }}</p>
+                                    {% endif %}
+                                </div>
+                            </a>
+                            <div class="row">
+                                <div class="col s12 custom-btn">
+                                    <a href="#" class="btn-small green accent-4"><i class="fas fa-thumbs-up"></i></a>
+                                    <div class="btn-small">likes</div>
+                                    <a href="#" class="btn-small red accent-4"><i class="fas fa-thumbs-down"></i></a>
+                                    <div class="btn-small">dislikes</div>                          
+                                </div>
+                            </div>                            
+                        </div>
+                {% endfor %}              
+            </div>
+        </div>
+
+{% endblock %}
