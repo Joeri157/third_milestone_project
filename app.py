@@ -219,16 +219,14 @@ def delete_upload(id):
 def add_comment(id):
     upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
     new_comment = {
-        "_id": ObjectId(),
+        "upload_title": request.form.get("upload_title"),
         "comment_by": session["user"],
         "comment_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
         "comment_description": request.form.get("comment_description")
     }
 
     if request.method == "POST":
-        mongo.db.uploads.update_one(
-            {"_id": ObjectId(id)},
-            {"$push": {"comments": new_comment}})
+        mongo.db.comments.insert_one(new_comment)
         flash(
             "Comment succesfully added, {}".format(session["user"]))
         return redirect(request.referrer)
@@ -274,8 +272,10 @@ def category_page(category_name):
 
 @app.route("/upload_page/<id>", methods=["GET", "POST"])
 def upload_page(id):
+    comments = list(
+        mongo.db.comments.find().sort("comment_time", -1))
     upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
-    return render_template("upload.html", upload=upload)
+    return render_template("upload.html", upload=upload, comments=comments)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #

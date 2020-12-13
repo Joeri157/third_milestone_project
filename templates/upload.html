@@ -66,11 +66,13 @@
                 </form>
             </div>
         {% endif %}
-    <!-------------------- Comment section -------------------->
+    <!-------------------- Comment section -------------------->        
         <div class="row">
             <div class="col s12">
-                {% for comment in upload.comments %}
+                {% for comment in comments %}                    
+                    {% if comment.upload_title == upload.upload_title %}
                     <div class="card">
+                    <div style="display: none;"> {{ comment.upload_title }}</div>
                         <div class="row" style="margin-bottom: 0;">
                             <div class="custom-commented-by col s12">
                                 Commented by: {{ comment.comment_by }}
@@ -81,22 +83,32 @@
                                         </li>
                                     </ul>
                                     <ul id="dropdown2" class="dropdown-content">
-                                        <li><a href="" class="">Delete</a></li>
-                                        <li><a href="">Edit</a></li>
+                                        <li><a href="{{ url_for('delete_comment', id=upload._id) }}" class="">Delete</a></li>
+                                        <li><a class="modal-trigger" href="{{ url_for('edit_comment', id=comment._id) }}">Edit</a></li>
                                     </ul>
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="card-content">
+                        <div class="card-content"
+                            style="
+                                padding: 0px 30px 20px 30px;
+                                word-break: break-all
+                                ">
                             <p>{{ comment.comment_description }}</p>
-                            <div class="col s6 custom-comment-time">
+                            <div class="col s6 custom-comment-time"
+                                style="margin: 0;
+                                    width: auto;
+                                    padding: 0px 0px 0px 0px;
+                                    color: #00000075;
+                                    font-size: 0.75rem;">
                                 {{ comment.comment_time }}
                             </div>
                         </div>                                          
-                    </div>                       
-                {% endfor %}              
+                    </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-        </div>            
+        </div>           
     </div>
 
 {% endblock %}
