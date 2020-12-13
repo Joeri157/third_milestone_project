@@ -122,8 +122,11 @@ def profile(username):
     if session["user"]:
         uploads = list(
             mongo.db.uploads.find().sort("upload_time", -1))
+        comments = list(
+            mongo.db.comments.find().sort("comment_time", -1))
         return render_template(
-            "profile.html", username=username, uploads=uploads)
+            "profile.html", username=username,
+            uploads=uploads, comments=comments)
 
     return redirect(url_for("login"))
 
