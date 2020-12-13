@@ -1,6 +1,8 @@
 // Variables
 $font-weight-style: bold;
 $border-radius-style: 15px;
+$text-color: #ffa726;
+$text-color-2: #ffffff;
 
 /********************/
 /* Global Styles    */
@@ -24,12 +26,12 @@ main {
     h3 {
         font-weight: $font-weight-style;
         letter-spacing: 2px;
-        color: white;
+        color: $text-color-2;
     }
     h5 {
         font-weight: $font-weight-style;
         letter-spacing: 2px;
-        color: white;
+        color: $text-color-2;
     }
 }
 
@@ -62,7 +64,7 @@ ul {
     .custom-dropdown li>a {
     font-weight: $font-weight-style;
     font-size: 2rem;
-    color: white;
+    color: $text-color-2;
     padding: 15px 10px;
     }
 }
@@ -136,7 +138,7 @@ nav {
             margin: 0 2px 0 2px;
 
             a {
-                color: white;
+                color: $text-color-2;
             }
         }
     }
@@ -165,12 +167,17 @@ div ul li {
     .register-login-title{
     font-weight: $font-weight-style;
     letter-spacing: 4px;
+    color: $text-color;
     }
 
     .register-login-text {
     font-weight: $font-weight-style;
     font-size: 1.5rem;
     padding: 10px;
+        
+        a {
+            color: $text-color;
+        }
     }
 
     .register-login-button {
