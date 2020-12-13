@@ -51,6 +51,13 @@
             <div class="row">                
                 <form method="POST" action="{{ url_for('add_comment', id=upload._id) }}">
     <!--------------------  Comment Description -------------------->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="upload_title" name="upload_title"
+                                value="{{ upload.upload_title }}" type="text" class="validate"
+                                style="display: none;" required>
+                        </div>
+                    </div>
                     <div class="col s12">
                         <div class="card-panel">
                             <div class="input-field col s12">
@@ -83,8 +90,8 @@
                                         </li>
                                     </ul>
                                     <ul id="dropdown2" class="dropdown-content">
-                                        <li><a href="{{ url_for('delete_comment', id=upload._id) }}" class="">Delete</a></li>
-                                        <li><a class="modal-trigger" href="{{ url_for('edit_comment', id=comment._id) }}">Edit</a></li>
+                                        <li><a href="" class="">Delete</a></li>
+                                        <li><a href="{{ url_for('edit_comment', id=comment._id) }}">Edit</a></li>
                                     </ul>
                                 {% endif %}
                             </div>
