@@ -61,8 +61,18 @@
                 </div>
             </div>
         </div>
-    <hr>
-        Hier nog een link maken die je terug naar de post brengt wanneer je klaar bent
+        {% for upload in uploads %}
+            {% if upload.upload_title == comments.upload_title %}            
+                <div class="row">
+                    <!--------------------  Edit-Button -------------------->
+                    <a href="{{ url_for('upload_page', id=upload._id) }}" target="_blank">        
+                        <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
+                            Satisfied? Return to {{ upload.upload_title }}!
+                        </button>
+                    </a>
+                </div> 
+            {% endif %}
+        {% endfor %}
     </div>
 
 {% endblock %}

@@ -245,6 +245,7 @@ def add_comment(id):
 @app.route("/edit_comment/<id>", methods=["GET", "POST"])
 def edit_comment(id):
     comments = mongo.db.comments.find_one({"_id": ObjectId(id)})
+    uploads = mongo.db.uploads.find()
     if request.method == "POST":
         mongo.db.comments.update_one(
             {"_id": ObjectId(id)},
@@ -254,7 +255,8 @@ def edit_comment(id):
             }})
         flash("Comment succesfully changed")
         return redirect(request.referrer)
-    return render_template("edit_comment.html", comments=comments)
+    return render_template(
+        "edit_comment.html", comments=comments, uploads=uploads)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
