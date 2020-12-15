@@ -242,12 +242,19 @@ def add_comment(id):
 #  Edit Comment                                                               #
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 
-@app.route("/edit_comment", methods=["GET", "POST"])
-def edit_comment():
+@app.route("/edit_comment/<id>", methods=["GET", "POST"])
+def edit_comment(id):
+    comments = mongo.db.comments.find_one({"_id": ObjectId(id)})
     if request.method == "POST":
+        mongo.db.comments.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {
+                "comment_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+                "comment_description": request.form.get("comment_description")
+            }})
         flash("Comment succesfully changed")
         return redirect(request.referrer)
-    return redirect(request.referrer)
+    return render_template("edit_comment.html", comments=comments)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #

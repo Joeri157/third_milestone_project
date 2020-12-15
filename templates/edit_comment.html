@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <h5 class="#ffa726 orange lighten-1 center-align">Edit Comment</h5>
+        <div class="col s12">
+            <div class="card">
+                <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('edit_comment', id=comments._id) }}">
+                    <div class="row" style="margin-bottom: 0;">
+                        <div class="custom-commented-by col s12">
+                            Commented on: {{ comments.upload_title }}
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">                     
+                            <div class="input-field col s12">
+                                <textarea id="comment_description" name="comment_description"
+                                    maxlength="300" class="materialize-textarea" data-length="300">
+                                    {{- comments.comment_description -}}
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--------------------  Edit-Button -------------------->        
+                            <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
+                                Edit Upload!<i class="fas fa-edit right"></i>
+                            </button>
+                        </div>                    
+                    </div>
+                </form>
+            </div>                
+        </div>
+    <!-------------------- Shows your old and current comment when updated -------------------->
+        <h5 class="#ffa726 orange lighten-1 center-align">Old / New Comment shown</h5>
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                <div style="display: none;"> {{ comments.upload_title }}</div>
+                    <div class="row" style="margin-bottom: 0;">
+                        <div class="custom-commented-by col s12">
+                            Commented by: {{ comments.comment_by }}
+                            {% if session.user|lower == comments.comment_by|lower %}
+                                <ul class="right dropdown-comment">
+                                    <li>
+                                        <a class="dropdown-trigger1 comment-icon" href="#!" data-target="dropdown2"><i class="fas fa-ellipsis-v"></i></a>
+                                    </li>
+                                </ul>
+                                <ul id="dropdown2" class="dropdown-content">
+                                    <li><a href="" class="">Delete</a></li>
+                                    <li><a href="{{ url_for('edit_comment', id=comments._id) }}">Edit</a></li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>{{ comments.comment_description }}</p>
+                        <div class="col s6 custom-comment-time">
+                            {{ comments.comment_time }}
+                        </div>
+                    </div>                                          
+                </div>
+            </div>
+        </div>
+    <hr>
+        Hier nog een link maken die je terug naar de post brengt wanneer je klaar bent
+    </div>
+
+{% endblock %}
