@@ -20,7 +20,9 @@
             </div>
     <!-------------------- Uploads tab -------------------->
             <div id="own-uploads" class="col s12">
-                {% if uploads|length > 0 %}
+                {% if count_uploads == 0 %}                
+                <h4 class="red-text text-darken-4 center-align">No uploads yet</h4>
+                {% else %}                      
                     {% for upload in uploads %}
                         {% if session.user|lower == upload.uploaded_by|lower %}
                             <div class="row">
@@ -67,14 +69,14 @@
                                 </div>
                             </div>
                         {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <h4 class="red-text text-darken-4 center-align">No Comments</h4>  
+                    {% endfor %}  
                 {% endif %}
             </div>
     <!-------------------- Comments tab -------------------->
             <div id="own-comments" class="col s12">
-                {% if comments|length > 0 %}
+                {% if count_comments == 0 %}
+                    <h4 class="red-text text-darken-4 center-align">No Comments</h4>
+                {% else %}                      
                     {% for comment in comments %}
                         {% if session.user|lower == comment.comment_by|lower %}
                             <div class="row">
@@ -104,9 +106,7 @@
                                 </div>
                             </div>
                         {% endif %}
-                    {% endfor %}                
-                {% else %}
-                    <h4 class="red-text text-darken-4 center-align">No Comments</h4>  
+                    {% endfor %}
                 {% endif %}              
             </div>
         </div>          

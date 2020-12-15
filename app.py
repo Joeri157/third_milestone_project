@@ -120,13 +120,14 @@ def profile(username):
         {"username": session["user"]})["username"]
 
     if session["user"]:
-        uploads = list(
-            mongo.db.uploads.find().sort("upload_time", -1))
-        comments = list(
-            mongo.db.comments.find().sort("comment_time", -1))
+        uploads = mongo.db.uploads.find().sort("upload_time", -1)
+        comments = mongo.db.comments.find().sort("comment_time", -1)
+        count_uploads = uploads.count()
+        count_comments = comments.count()
         return render_template(
             "profile.html", username=username,
-            uploads=uploads, comments=comments)
+            uploads=uploads, count_uploads=count_uploads,
+            comments=comments, count_comments=count_comments)
 
     return redirect(url_for("login"))
 
