@@ -1,73 +1,103 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h3 class="#ffa726 orange lighten-1 center-align">Edit Upload</h3>
-
-<!--------------------  Edit Upload -------------------->
-    <div class="row">
-        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('edit_upload', id=upload._id) }}" enctype="multipart/form-data">
-            <div class="card-panel">
-<!--------------------  Category Name -------------------->
-                <div class="row">            
-                    <div class="input-field col s12">
-                        <select id="catergory_name" name="catergory_name" class="validate" required>
-                            <option value="" disabled selected>Choose Category</option>
-                            {% for category in categories %}
-                                {% if category.category_name == upload.category_name %}
-                                    <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
-                                {% else %}
-                                    <option value="{{ category.category_name }}">{{ category.category_name }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <label for="catergory_name">Upload Category</label>
-                    </div>
-                </div>
-    <!--------------------  Upload Title -------------------->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="upload_title" name="upload_title"
-                            value="{{ upload.upload_title }}" type="text" class="validate" required>
-                        <label for="upload_title">Title</label>
-                    </div>
-                </div>
-    <!--------------------  Upload-Image -------------------->
-                <div class="row">
-                    <div class="wrapper">
-                        <div class="file-upload">
-                            <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" />
-                            <span class="js-value">Add Image</span>
+    <div class="container">
+        <h3 class="#ffa726 orange lighten-1 center-align">Edit Upload</h3>
+    <!--------------------  Edit Upload -------------------->
+        <div class="row">
+            <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('edit_upload', id=upload._id) }}" enctype="multipart/form-data">
+                <div class="card-panel">
+    <!--------------------  Category Name -------------------->
+                    <div class="row">            
+                        <div class="input-field col s12">
+                            <select id="catergory_name" name="catergory_name" class="validate" required>
+                                <option value="" disabled selected>Choose Category</option>
+                                {% for category in categories %}
+                                    {% if category.category_name == upload.category_name %}
+                                        <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
+                                    {% else %}
+                                        <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <label for="catergory_name">Upload Category</label>
                         </div>
+                    </div>
+        <!--------------------  Upload Title -------------------->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="upload_title" name="upload_title"
+                                value="{{ upload.upload_title }}" type="text" class="validate" required>
+                            <label for="upload_title">Title</label>
+                        </div>
+                    </div>
+        <!--------------------  Upload-Image -------------------->
+                    <div class="row">
+                        <div class="wrapper">
+                            <div class="file-upload">
+                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" />
+                                <span class="js-value">Add Image</span>
+                            </div>
+                        </div>
+                    </div>
+        <!--------------------  Upload-Description -------------------->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="upload_description" name="upload_description" minlength="30"
+                                maxlength="300" class="materialize-textarea" data-length="300">
+                                {{- upload.upload_description -}}
+                            </textarea>
+                            <label for="upload_description">Text-Description (optional) </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+        <!--------------------  Cancel-Button -------------------->
+                            <a href="{{ url_for('upload_page', id=upload._id) }}" class="btn-small red">
+                                Cancel!<i class="fas fa-times-circle right"></i>
+                            </a>
+        <!--------------------  Edit-Button -------------------->        
+                            <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
+                                Edit Upload!<i class="fas fa-edit right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>        
+        </div>
+        <!-- OLD / NEW UPLOAD, updates after you've pressed edit button -->
+        <h5 class="#ffa726 orange lighten-1 center-align">Click edit to update</h5>
+        <div class="row">
+            <div class="col col s12 m8 offset-m2">
+                <div class="card #f5f5f5 grey lighten-4">
+                    <div class="row">
+                        <div class="custom-upload-category col s6 ">
+                            {{ upload.category_name }}
+                        </div>
+                        <div class="col s6 custom-upload-time">
+                            {{ upload.upload_time }}
+                        </div>
+                    </div>
+                    <div class="custom-upload-title" style="margin: 0;">                                
+                            {{ upload.upload_title }}                                
                     </div>
                     <div class="card-image">
                         <img src="{{ upload.upload_image }}">
                     </div>
-                </div>
-    <!--------------------  Upload-Description -------------------->
-                <div class="row">
-                    <div class="input-field col s12">
-                        <textarea id="upload_description" name="upload_description" minlength="30"
-                            maxlength="300" class="materialize-textarea" data-length="300">
-                            {{- upload.upload_description -}}
-                        </textarea>
-                        <label for="upload_description">Text-Description (optional) </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-    <!--------------------  Cancel-Button -------------------->
-                        <a href="{{ url_for('upload_page', id=upload._id) }}" class="btn-small red">
-                            Cancel!<i class="fas fa-times-circle right"></i>
-                        </a>
-    <!--------------------  Edit-Button -------------------->        
-                        <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
-                            Edit Upload!<i class="fas fa-edit right"></i>
-                        </button>
-                    </div>
-                </div>
+                    <div class="card-content custom-upload-content">
+                        <p>{{ upload.upload_description}}</p>
+                    </div>                   
+                </div>           
             </div>
-        </form>
+        </div>     
+        <div class="row center-align">
+            <!--------------------  Edit-Button -------------------->
+            <a href="{{ url_for('upload_page', id=upload._id) }}" target="_blank">        
+                <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
+                    Satisfied? Return to {{ upload.upload_title }}!
+                </button>
+            </a>
+        </div>
     </div>
-
 
 {% endblock %}

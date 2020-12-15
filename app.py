@@ -198,7 +198,7 @@ def edit_upload(id):
         )
         flash(
             "Well done {},upload succesfully updated!".format(session["user"]))
-        return redirect(url_for("index"))
+        return redirect(request.referrer)
 
     return render_template(
         "edit_upload.html", upload=upload, categories=categories)
