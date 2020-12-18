@@ -10,7 +10,7 @@ from flask import (
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from datetime import datetime
-from filestack import Client as FileStackClient, Security
+from filestack import Client as FileStackClient, Security, Filelink
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
@@ -29,7 +29,8 @@ filestack_secret = os.environ.get("FILE_STACK_SECRET_API_KEY")
 
 mongo = PyMongo(app)
 
-policy = {"expiry": 253381964415}
+policy = {'expiry': 253381964415}
+security = Security(policy, filestack_secret)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
@@ -153,7 +154,6 @@ def add_upload():
     categories = mongo.db.categories.find().sort("category_name", 1)
     if request.method == "POST":
         file_object = request.files["upload_image"].read()
-        security = Security(policy, filestack_secret)
         uploaded_file = filestack_client.upload(
             file_obj=io.BytesIO(file_object), security=security)
         upload = {
@@ -161,6 +161,7 @@ def add_upload():
             "upload_title": request.form.get("upload_title"),
             "upload_description": request.form.get("upload_description"),
             "upload_image": uploaded_file.url,
+            "upload_image_handle": uploaded_file.handle,
             "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
             "uploaded_by": session["user"]
             }
@@ -181,9 +182,9 @@ def edit_upload(id):
     upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
     categories = mongo.db.categories.find().sort("category_name", 1)
     if request.method == "POST":
+        overwrite_file = Filelink(upload["upload_image_handle"])
         file_object = request.files["file"].read()
-        security = Security(upload_only_policy, filestack_secret)
-        overwrite_file = filestack_client.upload(
+        overwrite_file.overwrite(
             file_obj=io.BytesIO(file_object), security=security)
         mongo.db.uploads.update_one(
             {"_id": ObjectId(id)},
@@ -192,6 +193,7 @@ def edit_upload(id):
                 "upload_title": request.form.get("upload_title"),
                 "upload_description": request.form.get("upload_description"),
                 "upload_image": overwrite_file.url,
+                "upload_image_handle": overwrite_file.handle,
                 "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
                 "uploaded_by": session["user"]
             }}
