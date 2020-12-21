@@ -2,7 +2,7 @@
 {% block content %}
     
     <div class="container">
-        <h3 class="#ffa726 orange lighten-1 center-align">Add Upload</h3>
+        <h3 class="#ffa726 orange lighten-1 center-align">Add Upload Image</h3>
     <!--------------------  Adding Upload -------------------->
         <div class="row">
             <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('add_upload') }}"  enctype="multipart/form-data">
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="wrapper">
                             <div class="file-upload">
-                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" />
+                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" required/>
                                 <span class="js-value">Add Image</span>                                
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col s12">
                         <p class="register-login-text center-align ">
-                            Upload text only? <a href="{{ url_for('register') }}">Click me!</a>
+                            Upload text only? <a href="{{ url_for('add_upload_text_only') }}">Click me!</a>
                         </p>
                     </div>
                 </div>
