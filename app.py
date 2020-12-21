@@ -4,6 +4,7 @@
 
 import os
 import io
+import math
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
@@ -38,13 +39,40 @@ security = Security(policy, filestack_secret)
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 
 @app.route("/")
-@app.route("/index")
+@app.route("/index", methods=["GET"])
 def index():
-    categories = list(mongo.db.categories.find().sort("category_name", 1))
-    uploads = list(
-        mongo.db.uploads.find().sort("upload_time", -1))
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    limit = 5
+    uploads = mongo.db.uploads.find().sort("upload_time", -1).limit(limit)
+    count_uploads = uploads.count()
+    last_upload = int(math.ceil(count_uploads/limit))
     return render_template(
-        "index.html", uploads=uploads, categories=categories)
+        "index.html", uploads=uploads,
+        categories=categories, count_uploads=count_uploads,
+        content=1, last_upload=last_upload)
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Load more function                                                         #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/index/<content>", methods=["GET"])
+def loadmore(content):
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    all_uploads = mongo.db.uploads.find().sort("upload_time", -1)
+    count_uploads = all_uploads.count()
+
+    limit = 5
+    offset = (int(content) - 1) * 5
+
+    uploads = mongo.db.uploads.find().sort(
+        "upload_time", -1).skip(offset).limit(limit)
+    last_upload = int(math.ceil(count_uploads/limit))
+
+    return render_template(
+        "index.html", all_uploads=all_uploads,
+        categories=categories, count_uploads=count_uploads,
+        uploads=uploads, last_upload=last_upload, content=content)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
@@ -316,7 +344,8 @@ def all_categories():
 
 @app.route("/category_page/<category_name>", methods=["GET"])
 def category_page(category_name):
-    uploads = mongo.db.uploads.find({"category_name": category_name})
+    uploads = mongo.db.uploads.find({
+        "category_name": category_name}).sort("upload_time", -1)
     return render_template("category.html", uploads=uploads)
 
 

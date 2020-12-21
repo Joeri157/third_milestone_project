@@ -206,42 +206,73 @@ div ul li {
 /* Add Upload          */
 /***********************/
 // Upload Button
-.wrapper{
+.wrapper {
   width:100%;
   height:100%;
-  align-items:center;  
+  align-items:center;
+  
+    .loadmore {
+        height:50px;
+        border-radius: 100px;
+        position:relative;
+        justify-content:center;
+        align-items: center;
+        border:4px solid #ffa726;
+        overflow:hidden;
+        background-image: linear-gradient(to bottom, #ffa726 50%, #FFFFFF 50%);
+        background-size: 100% 200%;
+        transition: all 1s;
+        color: #FFFFFF;
+        font-size:15px;
 
-  .file-upload{
-    height:50px;
-    border-radius: 100px;
-    position:relative;    
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    border:4px solid #ffa726;
-    overflow:hidden;
-    background-image: linear-gradient(to bottom, #ffa726 50%, #FFFFFF 50%);
-    background-size: 100% 200%;
-    transition: all 1s;
-    color: #FFFFFF;
-    font-size:15px;
+        a {
+            color: $text-color-2;
+            font-weight: $font-weight-style;
+            transition: all 1s;
+        }
 
-    input[type='file']{
-      height:50px;
-      width:100%;
-      position:absolute;
-      top:0;
-      left:0;
-      opacity:0;
-      cursor:pointer;
+        &:hover{
+            background-position: 0 -100%;
+            color:#ffa726;
+
+            a {
+                transition: all 1s;
+                color: $text-color;
+            }
+        }       
     }
 
-    &:hover{
-      background-position: 0 -100%;
-      color:#ffa726;
-    }
+    .file-upload {
+        height:50px;
+        border-radius: 100px;
+        position:relative;    
+        display:flex;
+        justify-content:center;
+        align-items: center;
+        border:4px solid #ffa726;
+        overflow:hidden;
+        background-image: linear-gradient(to bottom, #ffa726 50%, #FFFFFF 50%);
+        background-size: 100% 200%;
+        transition: all 1s;
+        color: #FFFFFF;
+        font-size:15px;
 
-  }
+        input[type='file'] {
+            height:50px;
+            width:100%;
+            position:absolute;
+            top:0;
+            left:0;
+            opacity:0;
+            cursor:pointer;
+        }
+
+        &:hover{
+            background-position: 0 -100%;
+            color:#ffa726;
+        }
+
+    }
 }
 
 /***********************/
