@@ -1,51 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
     
-    <h3 class="#ffa726 orange lighten-1 center-align">Add Upload</h3>
-
-<!--------------------  Adding Upload -------------------->
-    <div class="row">
-        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('add_upload') }}"  enctype="multipart/form-data">
-<!--------------------  Category Name -------------------->
-            <div class="row">            
-                <div class="input-field col s12">
-                    <select id="catergory_name" name="catergory_name" class="validate" required>
-                        <option value="" disabled selected>Choose Category</option>
-                        {% for category in categories %}
-                            <option value="{{ category.category_name}}">{{ category.category_name}}</option>
-                        {% endfor %}
-                    </select>
-                    <label for="catergory_name">Upload Category</label>
+    <div class="container">
+        <h3 class="#ffa726 orange lighten-1 center-align">Add Upload</h3>
+    <!--------------------  Adding Upload -------------------->
+        <div class="row">
+            <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('add_upload') }}"  enctype="multipart/form-data">
+                <div class="card-panel">
+    <!--------------------  Category Name -------------------->
+                    <div class="row">            
+                        <div class="input-field col s12">
+                            <select id="catergory_name" name="catergory_name" class="validate" required>
+                                <option value="" disabled selected>Choose Category</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.category_name}}">{{ category.category_name}}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="catergory_name">Upload Category</label>
+                        </div>
+                    </div>
+        <!--------------------  Upload Title -------------------->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="upload_title" name="upload_title"
+                                type="text" class="validate" required>
+                            <label for="upload_title">Title</label>
+                        </div>
+                    </div>
+        <!--------------------  Upload-Image -------------------->
+                    <div class="row">
+                        <div class="wrapper">
+                            <div class="file-upload">
+                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" />
+                                <span class="js-value">Add Image</span>                                
+                            </div>
+                        </div>
+                    </div>            
+                    <div class="row">                        
+                        <div class="card-image">
+                            <img class="preview_image" src="https://icons.iconarchive.com/icons/ccard3dev/dynamic-yosemite/1024/Preview-icon.png">
+                        </div>
+                    </div>
+        <!--------------------  Upload-Description -------------------->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="upload_description" name="upload_description" minlength="30"
+                                maxlength="300" class="materialize-textarea" data-length="300"></textarea>
+                            <label for="upload_description">Text-Description (optional) </label>
+                        </div>
+                    </div>
+        <!--------------------  Upload-Button -------------------->
+                    <div class="row center-align">
+                        <button class="btn-large #ffa726 orange lighten-1" type="submit">
+                            Upload!<i class="fas fa-paper-plane right"></i>
+                        </button>
+                    </div>
+                    <div class="col s12">
+                        <p class="register-login-text center-align ">
+                            Upload text only? <a href="{{ url_for('register') }}">Click me!</a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-<!--------------------  Upload Title -------------------->
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="upload_title" name="upload_title"
-                        type="text" class="validate" required>
-                    <label for="upload_title">Title</label>
-                </div>
-            </div>
-<!--------------------  Upload-Image -------------------->
-<!-- This the button to upload to Filestack -->
-            <div class="row">
-                <input type="file" name="upload_image" accept="image/x-png,image/gif,image/jpeg" />
-            </div>
-<!--------------------  Upload-Description -------------------->
-            <div class="row">
-                <div class="input-field col s12">
-                    <textarea id="upload_description" name="upload_description" minlength="30"
-                        maxlength="300" class="materialize-textarea" data-length="300"></textarea>
-                    <label for="upload_description">Text-Description (optional) </label>
-                </div>
-            </div>
-<!--------------------  Upload-Button -------------------->
-            <div class="row center-align">
-                <button class="btn-large #ffa726 orange lighten-1" type="submit">
-                    Upload!<i class="fas fa-paper-plane right"></i>
-                </button>
-            </div>
-        </form>
+            </form>
+        </div>        
     </div>
 
 

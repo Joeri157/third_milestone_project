@@ -153,7 +153,15 @@ def logout():
 def add_upload():
     categories = mongo.db.categories.find().sort("category_name", 1)
     if request.method == "POST":
-        file_object = request.files["upload_image"].read()
+        # Checks if the title already exists
+        existing_title = mongo.db.uploads.find_one({
+            "upload_title": request.form.get("upload_title")})
+        # if it exists it will let the user know
+        if existing_title:
+            flash("Title already exists")
+            return redirect(request.referrer)
+
+        file_object = request.files["file"].read()
         uploaded_file = filestack_client.upload(
             file_obj=io.BytesIO(file_object), security=security)
         upload = {
