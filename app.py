@@ -182,6 +182,37 @@ def add_upload():
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Add Upload                                                                 #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/add_upload_text_only", methods=["GET", "POST"])
+def add_upload_text_only():
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    if request.method == "POST":
+        # Checks if the title already exists
+        existing_title = mongo.db.uploads.find_one({
+            "upload_title": request.form.get("upload_title")})
+        # if it exists it will let the user know
+        if existing_title:
+            flash("Title already exists")
+            return redirect(request.referrer)
+
+        upload = {
+            "category_name": request.form.get("catergory_name"),
+            "upload_title": request.form.get("upload_title"),
+            "upload_description": request.form.get("upload_description"),
+            "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+            "uploaded_by": session["user"]
+            }
+        mongo.db.uploads.insert_one(upload)
+        flash("Congratulations {}, upload was succesfull!".format(
+                session["user"]))
+        return redirect(url_for("index"))
+
+    return render_template("add_upload_text_only.html", categories=categories)
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 #  Edit Upload                                                                #
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 

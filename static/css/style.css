@@ -121,6 +121,10 @@ nav ul a.nav-upload-btn {
 .card .custom-btn .btn-delete-edit a {
   color: #ffffff;
 }
+.card .card-content p {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
 /* Side Nav Category */
 div ul li .side-cat-header {
