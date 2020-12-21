@@ -36,8 +36,13 @@
                         <div class="wrapper">
                             <div class="file-upload">
                                 <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" />
-                                <span class="js-value">Add Image</span>
+                                <span class="js-value">Add Image</span>                                
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">                        
+                        <div class="card-image">
+                            <img class="preview_image" src="{{ upload.upload_image }}">
                         </div>
                     </div>
         <!--------------------  Upload-Description -------------------->
@@ -66,7 +71,7 @@
             </form>        
         </div>
         <!-- OLD / NEW UPLOAD, updates after you've pressed edit button -->
-        <h5 class="#ffa726 orange lighten-1 center-align">Click edit to update</h5>
+        <h5 class="#ffa726 orange lighten-1 center-align">Preview</h5>
         <div class="row">
             <div class="col col s12 m8 offset-m2">
                 <div class="card #f5f5f5 grey lighten-4">
