@@ -77,8 +77,23 @@ nav {
     }
 
     ul a.nav-upload-btn {
-    padding: 0 5px;
-    font-weight: $font-weight-style;
+        padding: 0 5px;
+        font-weight: $font-weight-style;
+        position:relative;
+        justify-content:center;
+        align-items: center;
+        overflow:hidden;
+        background-image: linear-gradient(to bottom, #536dfe 50%, #FFFFFF 50%);
+        background-size: 100% 200%;
+        transition: all 1s;
+        color: #FFFFFF;
+        font-size:15px;
+        border-radius: 10px;
+
+    &:hover {
+        color: #536dfe;
+        background-position: 0 -100%;        
+        }
     }
 }
 
@@ -152,10 +167,29 @@ nav {
 }
 
 /* Side Nav Category */
-div ul li {
+div ul {
     .side-cat-header {
         font-weight: $font-weight-style;
         letter-spacing: 2px;
+    }
+
+    a .side-category-effect {  
+        justify-content:center;
+        align-items: center;
+        overflow:hidden;
+        background-image: linear-gradient(to bottom, #ffa726 50%, #FFFFFF 50%);
+        background-size: 100% 200%;
+        transition: all 1s;
+
+            &:hover{
+                background-position: 0 -100%;
+                color:#ffa726;
+
+                .custom-category-name {
+                    color:#ffa726;
+                    transition: all 1s;
+                }
+            }
     }
 
     a .custom-category-name {
@@ -163,7 +197,7 @@ div ul li {
         color: white;
         letter-spacing: 2px;
         font-size: 20px;
-    }
+    } 
 }
 
 /***********************/
@@ -337,17 +371,34 @@ div ul li {
 /***********************/
 /* Category            */
 /***********************/
-.card-category {
-    padding: 10px;
-    margin: 10px;
-    border-radius: $border-radius-style;
-
-    .card-content-category {
-        a {
-            color: white;
-            font-weight: $font-weight-style;
-            font-size: 18px;
-
+a .all-categories-card {
+    position:relative;    
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    border:4px solid #ffa726;
+    overflow:hidden;
+    background-image: linear-gradient(to bottom, #ffa726 50%, #FFFFFF 50%);
+    background-size: 100% 200%;
+    transition: all 1s;    
+    
+    .card-content-category {        
+        color: $text-color-2;
+        font-weight: $font-weight-style;
+        font-size: 1.25rem;
+        letter-spacing: 5px;
+        
+        &:hover {        
+            background-position: 0 -100%;
+            color:#ffa726;
+            transition: all 1s;
         }
     }
+
+    &:hover {        
+            background-position: 0 -100%;
+            color:#ffa726;
+        }
+    
+    
 }

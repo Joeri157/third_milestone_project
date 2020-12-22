@@ -68,6 +68,20 @@ nav a.custom-logo {
 nav ul a.nav-upload-btn {
   padding: 0 5px;
   font-weight: bold;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-image: linear-gradient(to bottom, #536dfe 50%, #FFFFFF 50%);
+  background-size: 100% 200%;
+  transition: all 1s;
+  color: #FFFFFF;
+  font-size: 15px;
+  border-radius: 10px;
+}
+nav ul a.nav-upload-btn:hover {
+  color: #536dfe;
+  background-position: 0 -100%;
 }
 
 /***********************/
@@ -127,11 +141,27 @@ nav ul a.nav-upload-btn {
 }
 
 /* Side Nav Category */
-div ul li .side-cat-header {
+div ul .side-cat-header {
   font-weight: bold;
   letter-spacing: 2px;
 }
-div ul li a .custom-category-name {
+div ul a .side-category-effect {
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-image: linear-gradient(to bottom, #ffa726 50%, #FFFFFF 50%);
+  background-size: 100% 200%;
+  transition: all 1s;
+}
+div ul a .side-category-effect:hover {
+  background-position: 0 -100%;
+  color: #ffa726;
+}
+div ul a .side-category-effect:hover .custom-category-name {
+  color: #ffa726;
+  transition: all 1s;
+}
+div ul a .custom-category-name {
   font-weight: bold;
   color: white;
   letter-spacing: 2px;
@@ -282,15 +312,31 @@ div ul li a .custom-category-name {
 /***********************/
 /* Category            */
 /***********************/
-.card-category {
-  padding: 10px;
-  margin: 10px;
-  border-radius: 15px;
+a .all-categories-card {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #ffa726;
+  overflow: hidden;
+  background-image: linear-gradient(to bottom, #ffa726 50%, #FFFFFF 50%);
+  background-size: 100% 200%;
+  transition: all 1s;
 }
-.card-category .card-content-category a {
-  color: white;
+a .all-categories-card .card-content-category {
+  color: #ffffff;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 1.25rem;
+  letter-spacing: 5px;
+}
+a .all-categories-card .card-content-category:hover {
+  background-position: 0 -100%;
+  color: #ffa726;
+  transition: all 1s;
+}
+a .all-categories-card:hover {
+  background-position: 0 -100%;
+  color: #ffa726;
 }
 
 /*# sourceMappingURL=style.css.map */

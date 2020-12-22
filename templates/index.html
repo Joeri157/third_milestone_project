@@ -65,11 +65,11 @@
                 <ul class="collection with-header">                    
                     <li class="collection-header "><h4 class="orange-text side-cat-header">Categories</h4></li>
                     {% for category in categories %}
-                    <li class="collection-item #ffa726 orange lighten-1">
-                        <a href="">
-                        <span class="custom-category-name">{{ category.category_name }}</span>
-                        </a>
-                    </li>
+                    <a href="{{ url_for('category_page', category_name=category.category_name) }}">
+                        <li class="side-category-effect collection-item">                        
+                        <span class="custom-category-name">{{ category.category_name }}</span>                        
+                        </li>
+                    </a>
                     {% endfor %}
                 </ul>
             </div>

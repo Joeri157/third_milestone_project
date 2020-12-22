@@ -2,18 +2,21 @@
 {% block content %}
 
     <div class="container">
-        <h5 class="#ffa726 orange lighten-1 center-align">Choose Category</h5>
+        <h5 class="#ffa726 orange lighten-1 center-align">Choose Category</h5>        
         <div class="row">
             {% for category in categories %}
-                <div class="col s12 m6 l4">
-                    <div class="card-category #ffa726 orange lighten-1 center-align">
-                        <div class="card-content-category white-text">
-                            <a href="{{ url_for('category_page', category_name=category.category_name) }}">
+            <div class="col s12 m6 l4">
+                <a href="{{ url_for('category_page', category_name=category.category_name) }}">
+                    <div class="card all-categories-card center-align">
+                        <div class="card-content-category">
+                            <div class="card-image">
+                                <img src="{{ category.category_url }}">
                                 <span class="custom-category-name">{{ category.category_name }}</span>
-                            </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
