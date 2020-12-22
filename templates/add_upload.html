@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="wrapper">
                             <div class="file-upload">
-                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" required/>
+                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg"/>
                                 <span class="js-value">Add Image</span>                                
                             </div>
                         </div>
@@ -44,9 +44,9 @@
         <!--------------------  Upload-Description -------------------->
                     <div class="row">
                         <div class="input-field col s12">
-                            <textarea id="upload_description" name="upload_description" minlength="30"
-                                maxlength="300" class="materialize-textarea" data-length="300"></textarea>
-                            <label for="upload_description">Text-Description (optional) </label>
+                            <textarea id="upload_description" name="upload_description"
+                                maxlength="300" class="materialize-textarea" data-length="1000"></textarea>
+                            <label for="upload_description">Story Time...!(optional) </label>
                         </div>
                     </div>
         <!--------------------  Upload-Button -------------------->
@@ -54,11 +54,6 @@
                         <button class="btn-large #ffa726 orange lighten-1" type="submit">
                             Upload!<i class="fas fa-paper-plane right"></i>
                         </button>
-                    </div>
-                    <div class="col s12">
-                        <p class="register-login-text center-align ">
-                            Upload text only? <a href="{{ url_for('add_upload_text_only') }}">Click me!</a>
-                        </p>
                     </div>
                 </div>
             </form>

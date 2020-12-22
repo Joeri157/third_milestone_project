@@ -190,54 +190,41 @@ def add_upload():
             return redirect(request.referrer)
 
         file_object = request.files["file"].read()
-        uploaded_file = filestack_client.upload(
-            file_obj=io.BytesIO(file_object), security=security)
-        upload = {
-            "category_name": request.form.get("catergory_name"),
-            "upload_title": request.form.get("upload_title"),
-            "upload_description": request.form.get("upload_description"),
-            "upload_image": uploaded_file.url,
-            "upload_image_handle": uploaded_file.handle,
-            "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
-            "uploaded_by": session["user"]
+        upload_image = file_object
+        # when image is selected
+        # then this function will be executed
+        if upload_image:
+            uploaded_file = filestack_client.upload(
+                file_obj=io.BytesIO(file_object), security=security)
+            upload = {
+                "category_name": request.form.get("catergory_name"),
+                "upload_title": request.form.get("upload_title"),
+                "upload_description": request.form.get("upload_description"),
+                "upload_image": uploaded_file.url,
+                "upload_image_handle": uploaded_file.handle,
+                "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+                "uploaded_by": session["user"]
+                }
+            mongo.db.uploads.insert_one(upload)
+            flash("Congratulations {}, upload was succesfull!".format(
+                    session["user"]))
+            return redirect(url_for("index"))
+
+        # if there is no image selected then this function will be executed
+        else:
+            upload = {
+                "category_name": request.form.get("catergory_name"),
+                "upload_title": request.form.get("upload_title"),
+                "upload_description": request.form.get("upload_description"),
+                "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+                "uploaded_by": session["user"]
             }
-        mongo.db.uploads.insert_one(upload)
-        flash("Congratulations {}, upload was succesfull!".format(
-                session["user"]))
-        return redirect(url_for("index"))
+            mongo.db.uploads.insert_one(upload)
+            flash("Congratulations {}, upload was succesfull!".format(
+                    session["user"]))
+            return redirect(url_for("index"))
 
     return render_template("add_upload.html", categories=categories)
-
-
-#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
-#  Add Upload                                                                 #
-#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
-
-@app.route("/add_upload_text_only", methods=["GET", "POST"])
-def add_upload_text_only():
-    categories = mongo.db.categories.find().sort("category_name", 1)
-    if request.method == "POST":
-        # Checks if the title already exists
-        existing_title = mongo.db.uploads.find_one({
-            "upload_title": request.form.get("upload_title")})
-        # if it exists it will let the user know
-        if existing_title:
-            flash("Title already exists")
-            return redirect(request.referrer)
-
-        upload = {
-            "category_name": request.form.get("catergory_name"),
-            "upload_title": request.form.get("upload_title"),
-            "upload_description": request.form.get("upload_description"),
-            "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
-            "uploaded_by": session["user"]
-            }
-        mongo.db.uploads.insert_one(upload)
-        flash("Congratulations {}, upload was succesfull!".format(
-                session["user"]))
-        return redirect(url_for("index"))
-
-    return render_template("add_upload_text_only.html", categories=categories)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
@@ -249,25 +236,76 @@ def edit_upload(id):
     upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
     categories = mongo.db.categories.find().sort("category_name", 1)
     if request.method == "POST":
-        overwrite_file = Filelink(upload["upload_image_handle"])
         file_object = request.files["file"].read()
-        overwrite_file.overwrite(
-            file_obj=io.BytesIO(file_object), security=security)
-        mongo.db.uploads.update_one(
-            {"_id": ObjectId(id)},
-            {"$set": {
-                "category_name": request.form.get("catergory_name"),
-                "upload_title": request.form.get("upload_title"),
-                "upload_description": request.form.get("upload_description"),
-                "upload_image": overwrite_file.url,
-                "upload_image_handle": overwrite_file.handle,
-                "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
-                "uploaded_by": session["user"]
-            }}
-        )
-        flash(
-            "Well done {},upload succesfully updated!".format(session["user"]))
-        return redirect(request.referrer)
+        existing_image = file_object
+        # When there is already an uploaded image
+        # and new image is selected
+        # then this function will be executed
+        if existing_image:
+            overwrite_file = Filelink(upload["upload_image_handle"])
+            file_object = request.files["file"].read()
+            overwrite_file.overwrite(
+                file_obj=io.BytesIO(file_object), security=security)
+            mongo.db.uploads.update_one(
+                {"_id": ObjectId(id)},
+                {"$set": {
+                    "category_name": request.form.get("catergory_name"),
+                    "upload_title": request.form.get("upload_title"),
+                    "upload_description": request.form.get(
+                        "upload_description"),
+                    "upload_image": overwrite_file.url,
+                    "upload_image_handle": overwrite_file.handle,
+                    "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+                    "uploaded_by": session["user"]
+                }}
+            )
+            flash(
+                "Well done {},upload succesfully updated!".format(
+                    session["user"]))
+            return redirect(request.referrer)
+        # When no image is selected
+        # This function will be executed
+        else:
+            mongo.db.uploads.update_one(
+                {"_id": ObjectId(id)},
+                {"$set": {
+                    "category_name": request.form.get("catergory_name"),
+                    "upload_title": request.form.get("upload_title"),
+                    "upload_description": request.form.get(
+                        "upload_description"),
+                    "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+                    "uploaded_by": session["user"]
+                }}
+            )
+            flash(
+                "Well done {},upload succesfully updated!".format(
+                    session["user"]))
+            return redirect(request.referrer)
+
+        # when image is selected
+        # then this function will update current values
+        # elif new_image and not existing_image:
+        #     uploaded_file = filestack_client.upload(
+        #         file_obj=io.BytesIO(file_object), security=security)
+        #     mongo.db.uploads.update_one(
+        #         {"_id": ObjectId(id)},
+        #         {"$set": {
+        #             "category_name": request.form.get("catergory_name"),
+        #             "upload_title": request.form.get("upload_title"),
+        #             "upload_description": request.form.get(
+        #                 "upload_description"),
+        #             "upload_image": uploaded_file.url,
+        #             "upload_image_handle": uploaded_file.handle,
+        #             "upload_time": datetime.now().strftime("%Y-%m-%d, %H:%M"),
+        #             "uploaded_by": session["user"]
+        #         }}
+        #     )
+        #     flash(
+        #         "Well done {},upload succesfully updated!".format(
+        #             session["user"]))
+        #     return redirect(request.referrer)
+        # if there is no image selected
+        # then this function will update current values
 
     return render_template(
         "edit_upload.html", upload=upload, categories=categories)
