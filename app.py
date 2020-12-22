@@ -317,6 +317,10 @@ def edit_upload(id):
 
 @app.route("/delete_upload/<id>")
 def delete_upload(id):
+    upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
+    delete_image = Filelink(upload["upload_image_handle"])
+    delete_image.delete(apikey=(os.environ.get(
+        "FILE_STACK_PUBLIC_API_KEY")), security=security)
     mongo.db.uploads.remove({"_id": ObjectId(id)})
     flash("Upload succesfully deleted")
     return redirect(url_for("index"))
