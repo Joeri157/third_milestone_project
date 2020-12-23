@@ -23,7 +23,7 @@
                 <li><a href="{{ url_for('profile', username=session['user']) }}"><i class="far fa-user-circle"></i>Profile</a></li>
                 <li><a href="{{ url_for('all_categories') }}"><i class="fas fa-th-large"></i>Categories</a></li>
                 <!-- Only visible on tablet/mobile devices -->
-                <li class="hide-on-large-only"><a href=""><i class="fas fa-search"></i>Search</a></li>
+                <li class="hide-on-large-only"><a href="{{ url_for('search') }}"><i class="fas fa-search"></i>Search</a></li>
                 <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>Log Out</a></li>
             {% else %}
                 <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i>Log In</a></li>
@@ -96,9 +96,9 @@
         <div class="centered">
             <div id="search-box">
             <i id="close-btn" class="fa fa-times fa-2x"></i>
-                <form action="/search" id="search-form" method="get" target="_top">
-                    <input id="search-text" name="q" placeholder="Search" type="text" />
-                    <button id="search-button" type="submit">                     
+                <form action="{{ url_for('search') }}" id="search-form" method="post" target="_top">
+                    <input id="query" name="query" placeholder="Search" type="text" />
+                    <button id="search-button" type="submit">                  
                         <span>Search</span>
                     </button>
                 </form>

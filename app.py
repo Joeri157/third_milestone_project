@@ -59,18 +59,17 @@ def index():
 @app.route("/index/<content>", methods=["GET"])
 def loadmore(content):
     categories = mongo.db.categories.find().sort("category_name", 1)
-    all_uploads = mongo.db.uploads.find().sort("upload_time", -1)
-    count_uploads = all_uploads.count()
 
     limit = 5
     offset = (int(content) - 1) * 5
 
     uploads = mongo.db.uploads.find().sort(
         "upload_time", -1).skip(offset).limit(limit)
+    count_uploads = uploads.count()
     last_upload = int(math.ceil(count_uploads/limit))
 
     return render_template(
-        "index.html", all_uploads=all_uploads,
+        "index.html",
         categories=categories, count_uploads=count_uploads,
         uploads=uploads, last_upload=last_upload, content=content)
 
@@ -401,6 +400,26 @@ def upload_page(id):
         mongo.db.comments.find().sort("comment_time", -1))
     upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
     return render_template("upload.html", upload=upload, comments=comments)
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Search Category and Title                                                  #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    limit = 5
+    query = request.form.get("query")
+    uploads = mongo.db.uploads.find({
+        '$text': {'$search': query}}).sort(
+            "upload_time", -1).limit(limit)
+    count_uploads = uploads.count()
+    last_upload = int(math.ceil(count_uploads/limit))
+    return render_template(
+        "search.html", uploads=uploads,
+        categories=categories, count_uploads=count_uploads,
+        last_upload=last_upload)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
