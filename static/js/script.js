@@ -5,7 +5,7 @@ $(document).ready(function(){
     $(".dropdown-trigger").dropdown({
         coverTrigger: false
         });
-
+    
     //Profile Tabs
     $('.tabs').tabs();
 
@@ -49,15 +49,25 @@ $(document).ready(function(){
         alignment: "right"
         });
     
-    // upload text
+    // Upload text inside button
     $('input[type="file"]').change(function(){
         var value = $("input[type='file']").val();
         $('.js-value').text(value);
     });
-
+    // Upload preview url link
     $('input[type="file"]').change( function(event) {
         var tmppath = URL.createObjectURL(event.target.files[0]);
         $("img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+    });
+
+    // Search Overlay
+    $('#close-btn').click(function() {
+        $('#search-overlay').fadeOut();
+        $('.nav-search-btn').show();
+    });
+    $('.nav-search-btn').click(function() {
+        $(this).hide();
+        $('#search-overlay').fadeIn();
     });
 
 });
