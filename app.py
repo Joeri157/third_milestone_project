@@ -451,10 +451,13 @@ def loadmore_category_page(category_name, content):
 
 @app.route("/upload/<id>", methods=["GET", "POST"])
 def upload(id):
+    categories = mongo.db.categories.find().sort("category_name", 1)
     comments = list(
         mongo.db.comments.find().sort("comment_time", -1))
     upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
-    return render_template("upload.html", upload=upload, comments=comments)
+    return render_template(
+        "upload.html", upload=upload,
+        comments=comments, categories=categories)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
