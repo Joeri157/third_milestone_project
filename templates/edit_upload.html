@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col s12">
         <!--------------------  Cancel-Button -------------------->
-                            <a href="{{ url_for('upload_page', id=upload._id) }}" class="btn-small red">
+                            <a href="{{ url_for('upload', id=upload._id) }}" class="btn-small red">
                                 Cancel!<i class="fas fa-times-circle right"></i>
                             </a>
         <!--------------------  Edit-Button -------------------->        
@@ -97,7 +97,7 @@
         </div>     
         <div class="row center-align">
             <!--------------------  Edit-Button -------------------->
-            <a href="{{ url_for('upload_page', id=upload._id) }}" target="_blank">        
+            <a href="{{ url_for('upload', id=upload._id) }}" target="_blank">        
                 <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
                     Satisfied? Return to {{ upload.upload_title }}!
                 </button>

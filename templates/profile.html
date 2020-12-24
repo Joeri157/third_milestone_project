@@ -13,78 +13,87 @@
     <!-------------------- Upload / Comment tabs -------------------->    
         <div class="row">
             <div class="col s12">
-            <ul class="tabs">
-                <li class="tab col s6 "><a href="#own-uploads">Uploads</a></li>
-                <li class="tab col s6"><a href="#own-comments">Comments</a></li>
-            </ul>
+                <ul class="tabs">
+                    <li class="tab col s6"><a href="#own-uploads">My Uploads</a></li>
+                    <li class="tab col s6"><a href="#own-comments">My Comments</a></li>
+                </ul>
             </div>
     <!-------------------- Uploads tab -------------------->
             <div id="own-uploads" class="col s12">
                 {% if count_uploads == 0 %}                
-                <h4 class="red-text text-darken-4 center-align">No uploads yet</h4>
-                {% else %}                      
-                    {% for upload in uploads %}
-                        {% if session.user|lower == upload.uploaded_by|lower %}
-                            <div class="row">
-                                <div class="col s12">
-                                    <div class="card #f5f5f5 grey lighten-4">
+                    <h4 class="red-text text-darken-4 center-align">No uploads yet</h4>
+                {% else %}
+                    <div class="row">                     
+                        {% for upload in uploads %}
+                            {% if session.user|lower == upload.uploaded_by|lower %}                            
+                                <div class="col s12 m10 offset-m1">
+                                    <div class="card upload-content #f5f5f5 grey lighten-4">
                                         <div class="row">
-                                            <div class="custom-upload-category col s6 ">
-                                                {{ upload.category_name }}
+                                            <!-------------------- Category Name -------------------->
+                                            <div class="col s6 custom-upload-category">
+                                                {{ upload.category_name -}}
                                             </div>
                                             <div class="col s6 custom-upload-time">
                                                 {{ upload.upload_time }}
                                             </div>
                                         </div>
-                                        <div class="custom-upload-title">                                
+                                        <!-------------------- on click to go to post link -------------------->
+                                        <a href="{{ url_for('upload', id=upload._id) }}" target="_blank">
+                                            <div class="custom-upload-title">                                
                                                 {{ upload.upload_title }}                                
-                                        </div>
-                                        <div class="card-image">
-                                            <img src="{{ upload.upload_image }}">
-                                        </div>
-                                        <div class="card-content custom-upload-content">
-                                            <p>{{ upload.upload_description}}</p>
-                                            <p class="custom-upload-by">by: {{ upload.uploaded_by }}</p>
-                                        </div>
-                    <!-------------------- Buttons like/dislike/edit/delete -------------------->
-                                        <div class="row">
-                                            <div class="col s12">
-                                                <div class="custom-btn">
-                                                        <a href="#" class="btn-small green accent-4"><i class="fas fa-thumbs-up"></i></a>
-                                                    <div class="btn-small">likes</div>
-                                                        <a href="#" class="btn-small red accent-4"><i class="fas fa-thumbs-down"></i></a>
-                                                    <div class="btn-small">dislikes</div>                                                
-                                                    {% if session.user|lower == upload.uploaded_by|lower %}
-                                                        <div class="right btn-small btn-delete-edit red accent-4">
-                                                            <a href="{{ url_for('delete_upload', id=upload._id) }}"><i class="far fa-trash-alt"></i></a>
-                                                        </div>
-                                                        <div class="right btn-small btn-delete-edit #536dfe indigo accent-2">
-                                                            <a href="{{ url_for('edit_upload', id=upload._id) }}"><i class="far fa-edit"></i></a>
-                                                        </div>
-                                                    {% endif %}
-                                                </div>
                                             </div>
-                                        </div>                     
+                                            <div class="card-image">
+                                                <img src="{{ upload.upload_image }}">
+                                            </div>
+                                            <div class="card-content custom-upload-content">
+                                                <p>{{ upload.upload_description}}</p>
+                                                <!-------------------- Only shows when the session user and uploaded by matches -------------------->  
+                                                {% if session.user|lower == upload.uploaded_by|lower %}
+                                                    <p class="custom-upload-by">by: {{ upload.uploaded_by }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                        <div class="row">
+                                            <div class="col s12 custom-btn">
+                                                <a href="#" class="btn-small green accent-4"><i class="fas fa-thumbs-up"></i></a>
+                                                <div class="btn-small">likes</div>
+                                                <a href="#" class="btn-small red accent-4"><i class="fas fa-thumbs-down"></i></a>
+                                                <div class="btn-small">dislikes</div>                          
+                                            </div>
+                                        </div>                            
                                     </div>           
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}  
+                                </div>                            
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="row center-align">                    
+                        <div class="col s12 wrapper">
+                            {% if content|int != last_upload|int %}
+                                <button class="btn loadmore">
+                                <a  href="{{ url_for('loadmore_profile_upload', username=username, content=content|int+1) }}">Load more</a>
+                                </button>
+                            {% else %}                            
+                                <button class="btn loadmore">
+                                <a  href="{{ url_for('profile', username=username) }}">Return to first</a>
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>  
                 {% endif %}
             </div>
     <!-------------------- Comments tab -------------------->
             <div id="own-comments" class="col s12">
                 {% if count_comments == 0 %}
                     <h4 class="red-text text-darken-4 center-align">No Comments</h4>
-                {% else %}                      
-                    {% for comment in comments %}
-                        {% if session.user|lower == comment.comment_by|lower %}
-                            <div class="row">
-                                <div class="col s12">
+                {% else %}
+                    <div class="row">                      
+                        {% for comment in comments %}
+                            {% if session.user|lower == comment.comment_by|lower %}                            
+                                <div class="col s12 m6 l4">
                                     <div class="card">
                                         <div class="row">
                                             <div class="custom-commented-by col s12">
-                                                Commented on : {{ comment.upload_title }}
+                                                <a href="{{ url_for('upload1', upload_title=comment.upload_title) }}">Commented on : {{ comment.upload_title }}</a>
                                                     <ul class="right dropdown-comment">
                                                         <li>
                                                             <a class="dropdown-trigger1 comment-icon" href="#!" data-target="dropdown2"><i class="fas fa-ellipsis-v"></i></a>
@@ -103,10 +112,10 @@
                                             </div>
                                         </div>                                          
                                     </div>          
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                                </div>                            
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 {% endif %}              
             </div>
         </div>          

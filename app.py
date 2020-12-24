@@ -148,16 +148,42 @@ def profile(username):
         {"username": session["user"]})["username"]
 
     if session["user"]:
-        uploads = mongo.db.uploads.find().sort("upload_time", -1)
+        limit = 5
+        uploads = mongo.db.uploads.find().sort(
+            "upload_time", -1).limit(limit)
         comments = mongo.db.comments.find().sort("comment_time", -1)
         count_uploads = uploads.count()
+        last_upload = int(math.ceil(count_uploads/limit))
         count_comments = comments.count()
         return render_template(
             "profile.html", username=username,
             uploads=uploads, count_uploads=count_uploads,
-            comments=comments, count_comments=count_comments)
+            comments=comments, count_comments=count_comments,
+            content=1, last_upload=last_upload)
 
     return redirect(url_for("login"))
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Loadmore Profile Uploads                                                   #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/profile/<username>/<content>", methods=["GET"])
+def loadmore_profile_upload(username, content):
+    categories = mongo.db.categories.find().sort("category_name", 1)
+
+    limit = 5
+    offset = (int(content) - 1) * 5
+
+    uploads = mongo.db.uploads.find().sort(
+        "upload_time", -1).skip(offset).limit(limit)
+    count_uploads = uploads.count()
+    last_upload = int(math.ceil(count_uploads/limit))
+
+    return render_template(
+        "profile.html", username=username,
+        categories=categories, count_uploads=count_uploads,
+        uploads=uploads, last_upload=last_upload, content=content)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
@@ -397,7 +423,7 @@ def category_page(category_name):
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
-#  Load more function                                                         #
+#  Load more function for category                                            #
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 
 @app.route("/category_page/<category_name>/<content>", methods=["GET"])
@@ -423,11 +449,23 @@ def loadmore_category_page(category_name, content):
 #  Upload on a single page                                                    #
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 
-@app.route("/upload_page/<id>", methods=["GET", "POST"])
-def upload_page(id):
+@app.route("/upload/<id>", methods=["GET", "POST"])
+def upload(id):
     comments = list(
         mongo.db.comments.find().sort("comment_time", -1))
     upload = mongo.db.uploads.find_one({"_id": ObjectId(id)})
+    return render_template("upload.html", upload=upload, comments=comments)
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Upload on single page from profile comment title                           #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/upload1/<upload_title>", methods=["GET", "POST"])
+def upload1(upload_title):
+    comments = list(
+        mongo.db.comments.find().sort("comment_time", -1))
+    upload = mongo.db.uploads.find_one({"upload_title": upload_title})
     return render_template("upload.html", upload=upload, comments=comments)
 
 

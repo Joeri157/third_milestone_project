@@ -65,7 +65,7 @@
             {% if upload.upload_title == comments.upload_title %}            
                 <div class="row">
                     <!--------------------  Edit-Button -------------------->
-                    <a href="{{ url_for('upload_page', id=upload._id) }}" target="_blank">        
+                    <a href="{{ url_for('upload', id=upload._id) }}" target="_blank">        
                         <button class="btn-small waves-effect waves-light #ffa726 orange lighten-1" type="submit">
                             Satisfied? Return to {{ upload.upload_title }}!
                         </button>
