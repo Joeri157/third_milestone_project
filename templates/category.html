@@ -44,6 +44,19 @@
                 {% endfor %}              
             </div>
         </div>
+        <div class="row center-align">                    
+            <div class="col s12 wrapper">
+                {% if content|int != last_upload|int %}
+                    <button class="btn loadmore">
+                        <a  href="{{ url_for('loadmore_category_page', category_name=category_name, content=content|int+1) }}">Load more</a>
+                    </button>
+                {% else %}                            
+                    <button class="btn loadmore">
+                        <a  href="{{ url_for('category_page', category_name=category_name) }}">Return to first</a>
+                    </button>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
 {% endblock %}

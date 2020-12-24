@@ -39,7 +39,7 @@ security = Security(policy, filestack_secret)
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
 
 @app.route("/")
-@app.route("/index", methods=["GET"])
+@app.route("/index/1")
 def index():
     categories = mongo.db.categories.find().sort("category_name", 1)
     limit = 5
@@ -385,9 +385,38 @@ def all_categories():
 
 @app.route("/category_page/<category_name>", methods=["GET"])
 def category_page(category_name):
+    limit = 5
     uploads = mongo.db.uploads.find({
-        "category_name": category_name}).sort("upload_time", -1)
-    return render_template("category.html", uploads=uploads)
+        "category_name": category_name}).sort("upload_time", -1).limit(limit)
+    count_uploads = uploads.count()
+    last_upload = int(math.ceil(count_uploads/limit))
+    return render_template(
+        "category.html", uploads=uploads,
+        count_uploads=count_uploads, last_upload=last_upload, content=1,
+        category_name=category_name)
+
+
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+#  Load more function                                                         #
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
+
+@app.route("/category_page/<category_name>/<content>", methods=["GET"])
+def loadmore_category_page(category_name, content):
+    categories = mongo.db.categories.find().sort("category_name", 1)
+
+    limit = 5
+    offset = (int(content) - 1) * 5
+
+    uploads = mongo.db.uploads.find().sort(
+        "upload_time", -1).skip(offset).limit(limit)
+    count_uploads = uploads.count()
+    last_upload = int(math.ceil(count_uploads/limit))
+
+    return render_template(
+        "category.html",
+        categories=categories, count_uploads=count_uploads,
+        uploads=uploads, last_upload=last_upload, content=content,
+        category_name=category_name)
 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  #
